@@ -7,7 +7,7 @@ export async function signInWithGoogle() {
     await supabase.auth.signInWithOAuth({
       provider : "google",
       options: {
-        redirectTo: `${origin}`,
+        redirectTo: `${origin}/auth/callback`,
         scopes: "https://www.googleapis.com/auth/calendar.events"
       },
     })
