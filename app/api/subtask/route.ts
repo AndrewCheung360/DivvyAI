@@ -3,11 +3,12 @@ import { pinata } from "@/utils/config";
 import { createClient } from "@/utils/supabase/server";
 import { start } from "repl";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
+
 
 /* Adds subtask with assignmentId to supabase */
 export async function POST(request: NextRequest) {
