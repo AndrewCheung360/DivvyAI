@@ -7,7 +7,7 @@ export async function signInWithGoogle() {
     await supabase.auth.signInWithOAuth({
       provider : "google",
       options: {
-        redirectTo: `${origin}/auth/callback`,
+        redirectTo: `${process.env.GOOGLE_OAUTH_REDIRECT_URL}`,
       },
     })
 }
