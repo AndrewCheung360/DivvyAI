@@ -6,18 +6,21 @@ import ImportScheduleButton from "@/components/home/ImportScheduleButton";
 import FileUploadForm from "@/components/upload-btn/UploadButton";
 import GetAssignmentForm from "@/components/get-assignment-btn/GetAssignmentButton";
 import AddAssignmentModal from "@/components/add-assignment-modal/AddAssignmentModal";
-import DeadlineButton from "@/components/deadline-button/DeadlineButton";
+import DeadlineButton from "@/components/choose-deadline/ChooseDeadlineButton";
+import SelectEstimatedTime from "@/components/estimated-time/EstimatedTime";
+import { Select } from "@mui/material";
 
 export default function Index() {
   return (
     <>
-    <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex justify-center items-center">
+    <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] flex justify-center items-center">
       <ImportScheduleButton/>
       <AddButton/>
       {/* <FileUploadForm/>
       <GetAssignmentForm/>
       <AddAssignmentModal/> */}
-      <DeadlineButton/>
+      {/* <DeadlineButton/> */}
+      <SelectEstimatedTime/>
     </div>
     </>
   );

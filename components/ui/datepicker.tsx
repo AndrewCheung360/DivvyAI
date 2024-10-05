@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { format } from "date-fns"
+import { format, set } from "date-fns"
 import  HourglassIcon from "/public/hourglass.svg"
 
 import { cn } from "@/lib/utils"
@@ -14,11 +14,28 @@ import {
 } from "@/components/ui/popover"
 import Image from "next/image"
 
+import { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+
 export function DatePickerDemo() {
   const [date, setDate] = React.useState<Date>()
+  const [time, setTime] = React.useState<Dayjs | null>()
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const handleClearCalender = () => {
+    setDate(undefined)
+    setTime(null)
+  }
+
+  const handleCloseCalender = () => {
+    setIsOpen(false);
+  }
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -26,76 +43,53 @@ export function DatePickerDemo() {
             "w-[280px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <div className="mr-2">
             <Image src = {HourglassIcon} alt = "Hourglass Icon" width = {10} height = {15}/>
           </div>
-          {date ? format(date, "PPP") : <span>Choose a Deadline</span>}
+          <div className="flex gap-1">
+            <div>{date ? format(date, "PPP") : <span>Choose a Deadline Date</span>}</div>
+            <div>{`${date && time ? "at " + format(time.toISOString(), "p") : ""}`}</div>
+          </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="flex-col justify-center items-center w-auto p-0 ">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
           initialFocus
         />
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-
-import { addDays } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
-
-export function DatePickerWithRange({
-  className,
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  })
-
-  return (
-    <div className={cn("grid gap-2", className)}>
-      <Popover>
-        <PopoverTrigger asChild>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['TimePicker']}>
+            <TimePicker
+              label="Select Deadline"
+              value={time}
+              onChange={(newValue) => setTime(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+        <div className="flex justify-center gap-8">
           <Button
-            id="date"
-            variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[100px] bg-accent justify-start text-left font-normal text-black",
               !date && "text-muted-foreground"
             )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
+            onClick={handleClearCalender}
+          >Clear
           </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-          />
-        </PopoverContent>
-      </Popover>
-    </div>
+          <Button
+            className={cn(
+              "w-[100px] bg-[#D7F066] justify-start text-left font-normal text-black",
+              !date && "text-muted-foreground"
+            )}
+            onClick={handleCloseCalender}
+          >
+          Done
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }
