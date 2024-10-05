@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string }}) {
   const { id } = params;
   const assignmentId = BigInt(id);
+  const { searchParams } = new URL(request.url);
+  const getPdf = searchParams.get("pdf");
   try {
     const supabase = createClient();
     const { data, error } = await supabase
@@ -19,6 +21,22 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         { error: error.message }, 
         { status: 400 });
     }
+    if (getPdf === "true") {
+      const file = await pinata.gateways.get(data.pdf);
+      const blob = file.data as Blob;
+      const arrayBuffer = await blob?.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      return new NextResponse(buffer, {
+        status: 200,
+        headers: {
+          'Content-Type': "application/pdf",
+          'Content-Length': blob.size.toString(),
+          'Content-Disposition': `attachment; filename="${data.name}.pdf"`,
+        },
+      });
+    }
+
     return NextResponse.json(data, { status: 200 });
   } catch (e) {
     console.log(e);
