@@ -1,0 +1,76 @@
+"use client"
+import React, { useRef, useState } from "react"
+
+export default function FileUploadForm() {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+    const handleButtonClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            console.log("Selected file:", file.name);
+            setSelectedFile(file);
+        }
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (selectedFile) {
+            console.log("Submitting file:", selectedFile.name);
+            // Handle form submission and file upload here
+            const data = new FormData();
+            data.append("name", selectedFile.name);
+            data.append("deadline", "test deadline");
+            data.append("estimated_time", "30");
+            data.append("priority", "critical");
+            data.append("file", selectedFile);
+            
+            const uploadFileRequest = await fetch("/api/assignment", {
+                method: "POST",
+                body: data,
+            });
+            const uploadFile = await uploadFileRequest.json();
+            console.log(uploadFile);
+        } else {
+            console.log("No file selected");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                />
+                <button
+                    type="button"
+                    className="w-[262px] h-[66px] bg-[#F4F4F4] rounded-[50px] flex justify-center items-center border-2 border-[#141414] gap-x-3 hover:bg-[#dbdbdb] cursor-pointer"
+                    onClick={handleButtonClick}
+                >
+                    <span className="text-[#141414] text-lg font-light">
+                        Choose File
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    type="submit"
+                    className="mt-4 w-[262px] h-[66px] bg-[#4CAF50] rounded-[50px] flex justify-center items-center border-2 border-[#141414] gap-x-3 hover:bg-[#45a049] cursor-pointer"
+                >
+                    <span className="text-white text-lg font-light">
+                        Submit
+                    </span>
+                </button>
+            </div>
+        </form>
+    );
+}
