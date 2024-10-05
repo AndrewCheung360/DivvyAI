@@ -98,7 +98,7 @@ function PasswordInput({isVisible, setIsVisible} : EmailFormProps){
 
 function GetStartedButton(){
     return(
-        <button className = "w-[67%] h-[66px] rounded-[50px] bg-[#141414] flex justify-center items-center">
+        <button className = "w-[67%] h-[66px] rounded-[50px] bg-[#141414] flex justify-center items-center hover:bg-[#202020]">
             <span className = "text-white font-light text-lg">
                 Get Started
             </span>
@@ -109,10 +109,10 @@ function GetStartedButton(){
 function GoogleSignInButton(){
     return(
         <button 
-            className = "w-[67%] h-[66px] rounded-[50px] border-2 border-[#141414] flex justify-center items-center"
+            className = "w-[67%] h-[66px] rounded-[50px] border-2 border-[#141414] flex justify-center items-center hover:bg-[#F4F4F4]"
             onClick = {signInWithGoogle}
         >
-            <Image src = {googleIcon} alt = "Google Icon" width = {26} height = {26}/>
+            <Image src = {googleIcon} alt = "Google Icon" width = {28} height = {28}/>
         </button>
     )
 }

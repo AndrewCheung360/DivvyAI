@@ -8,6 +8,7 @@ export async function signInWithGoogle() {
       provider : "google",
       options: {
         redirectTo: `${process.env.GOOGLE_OAUTH_REDIRECT_URL}`,
+        scopes: "https://www.googleapis.com/auth/calendar.events"
       },
     })
 }
