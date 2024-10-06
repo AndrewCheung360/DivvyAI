@@ -34,14 +34,11 @@ export default function Index() {
 
       <div className="col-span-4 h-screen z-40">
         <div className="flex flex-row justify-end pt-4 gap-x-4 pr-10">
-          {/* Add Assignment Button */}
           <AddButton/>
-          {/* Import Calendar Button */}
           <ImportScheduleButton/>
         </div>
 
         <div className="pt-4 px-8">
-          {/* Calendar */}
           <Scheduler />
         </div>
         
