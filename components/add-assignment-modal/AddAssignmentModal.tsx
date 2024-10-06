@@ -14,13 +14,15 @@ import { packQuestionsIntoFreeSlots } from '@/utils/calActions';
 import { useAuth } from '@clerk/nextjs';
 import { Dayjs } from 'dayjs';
 import { main } from '../../utils/openai/openAiAlgo'
+import { Event } from '../home/Scheduler';
 
 type AddAssignmentModalProps = {
   onClose: () => void;
+  events: Event[];
   setEvents: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function AddAssignmentModal({ onClose, setEvents }: AddAssignmentModalProps) {
+export default function AddAssignmentModal({ onClose, events, setEvents }: AddAssignmentModalProps) {
   const { userId } = useAuth();
   const [assignmentName, setAssignmentName] = useState<string>('');
   const [courseName, setCourseName] = useState<string>('');
@@ -125,19 +127,33 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
           <button className="w-[230px] h-[54px] bg-[#141414] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110"
             onClick = {
               () => {
-                main(0, 120).then((questions) => {
-                  combineDeadline();
-                  if (!questions || !userId || !deadline || !assignmentName) return;
+                const questions: [string, number][] = [["q1", 60], ["q2", 50], ["q3", 45], ["q4", 50], ["q5", 40], ["q6", 30], ["q7", 25], ["q8", 15], ["q9", 35], ["q10", 25]];
+                combineDeadline();
+                if (!questions || !userId || !deadline || !assignmentName) return;
 
-                  const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
-                    .then((events) => {
-                      setEvents(events)
-                    })
+                const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
+                  .then((res) => {
+                    if (res) {
+                      setEvents([...events, ...res]);
+                    }
+                  })
+                
+                console.log("Scheduled events: ", scheduledEvents);
+                
+                onClose();
+                // main(0, 120).then((questions) => {
+                //   combineDeadline();
+                //   if (!questions || !userId || !deadline || !assignmentName) return;
+
+                //   const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
+                //     .then((events) => {
+                //       setEvents(events)
+                //     })
                   
-                  console.log("Scheduled events: ", scheduledEvents);
+                //   console.log("Scheduled events: ", scheduledEvents);
                   
-                  onClose();
-                });
+                //   onClose();
+                // });
               }
             }
           >

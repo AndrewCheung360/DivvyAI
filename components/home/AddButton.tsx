@@ -1,12 +1,14 @@
 "use client"
 import React, { useState } from "react";
 import AddAssignmentModal from '../add-assignment-modal/AddAssignmentModal';
+import { Event } from "@/components/home/Scheduler";
 
 type AddButtonProps = {
+    events: Event[];
     setEvents: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-export default function AddButton({setEvents}: AddButtonProps) {
+export default function AddButton({events, setEvents}: AddButtonProps) {
     // State to manage modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,7 +34,7 @@ export default function AddButton({setEvents}: AddButtonProps) {
 
             {/* Conditionally render the modal */}
             {isModalOpen && (
-                <AddAssignmentModal onClose={handleCloseModal} setEvents={setEvents} />
+                <AddAssignmentModal onClose={handleCloseModal} events={events} setEvents={setEvents} />
             )}
         </>
     );
