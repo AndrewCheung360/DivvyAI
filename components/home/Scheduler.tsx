@@ -56,6 +56,7 @@ export interface Event {
   color: string;
 }
 
+
 type SchedulerType = {
   events: Event[];
 }
@@ -67,7 +68,6 @@ export default function Scheduler({events = []} : SchedulerType) {
   //   { title: "INFO: 4125", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-08'), color: "bg-[#D8FFD9]" },
   //   { title: "INFO: 2040", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-09'), color: "bg-[#D8F9FF]" },
   // ]);
-
 
   const [week, setWeek] = useState(getCurrentWeek());
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -127,7 +127,7 @@ export default function Scheduler({events = []} : SchedulerType) {
   
 
   return (
-    <div className="max-w-7xl mx-auto p-14 rounded-3xl shadow-2xl ">
+    <div className="max-w-8xl mx-auto p-14 rounded-3xl shadow-2xl ">
       {/* Calendar Header */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex flex-row gap-x-6 items-center">
@@ -163,7 +163,7 @@ export default function Scheduler({events = []} : SchedulerType) {
       </div>
 
       {/* Calendar Body with Hours */}
-      <div className="grid grid-cols-8 h-[60vh] overflow-auto"
+      <div className="grid grid-cols-8 h-[63vh] overflow-auto"
             style={{ gridTemplateColumns: '0.4fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}
 >
         {/* Times on the Left Side */}
