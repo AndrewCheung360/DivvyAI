@@ -1,8 +1,9 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import SignInForm from "@/components/auth/SignInForm";
 import AddButton from "@/components/home/AddButton";
+import { auth } from '@clerk/nextjs/server'
 import ImportScheduleButton from "@/components/home/ImportScheduleButton";
 import SideBar from "@/components/home/SideBar";
 import FileUploadForm from "@/components/upload-assignment/UploadAssignment";
@@ -14,17 +15,18 @@ import PrioritySelector from "@/components/choose-priority/ChoosePriority";
 import { UploadAssignment } from "@/components/upload-assignment/UploadAssignment";
 import UploadReference from "@/components/upload-reference/UploadReference";
 import FormInput from "@/components/form-input/FormInput";
-
-
 import Clipboard from "/public/clipboard.svg";
 import Whiteboard from "/public/whiteboard.svg";
 import TaskModal from "@/components/task-modal/TaskModal";
-import Scheduler from "@/components/home/Scheduler";
-
+import Scheduler, { Event } from "@/components/home/Scheduler";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Index() {
-  const [assignment, setAssignment] = useState<string>("");
-  const [corseName, setCourseName] = useState<string>("");
+
+  const { isLoaded, userId, sessionId, getToken } = useAuth()
+
+  const [events, setEvents] = useState<Event[]>([])
+
   return (
     <>
     <div className = "grid grid-cols-5 w-screen h-screen">
@@ -37,12 +39,12 @@ export default function Index() {
           {/* Add Assignment Button */}
           <AddButton/>
           {/* Import Calendar Button */}
-          <ImportScheduleButton/>
+          <ImportScheduleButton clerkId={userId!} setEvents={setEvents}/>
         </div>
 
         <div className="pt-4 px-8">
           {/* Calendar */}
-          <Scheduler />
+          <Scheduler events = {events} />
         </div>
         
       </div>

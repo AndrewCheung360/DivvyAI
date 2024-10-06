@@ -2,7 +2,7 @@
 import { clerkClient } from '@clerk/nextjs/server'
 import { google } from 'googleapis'
 import { calculateDurationInMinutes } from './utils'
-
+import { format } from 'date-fns'
 
 export type CalendarEvent = {
     summary: string,
@@ -134,6 +134,21 @@ export async function getFreeTimeSlots(query: FreeTimeQueryType){
     return freeTimes;
 }
 
+function formatTo12HourTime(date: Date): string {
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12; // The hour '0' should be '12'
+    
+    const minutesStr = minutes < 10 ? `0${minutes}` : minutes.toString();
+    
+    return `${hours}:${minutesStr} ${ampm}`;
+  }
+  
+
 export async function getAllCalendarEvents(clerkUserId: string, timeMin?: Date, timeMax?: Date) {
     const oAuthClient = await getOAuthClient(clerkUserId);
     if (!oAuthClient) {
@@ -168,17 +183,25 @@ export async function getAllCalendarEvents(clerkUserId: string, timeMin?: Date, 
         });
 
         if (response.data.items) {
+            // events.push(...response.data.items.map((event) => ({
+            //     summary: event.summary || 'No Title',
+            //     description: event.description || 'No Description',
+            //     start: event.start?.dateTime || event.start?.date,
+            //     end: event.end?.dateTime || event.end?.date,
+            // })));
             events.push(...response.data.items.map((event) => ({
-                summary: event.summary || 'No Title',
-                description: event.description || 'No Description',
-                start: event.start?.dateTime || event.start?.date,
-                end: event.end?.dateTime || event.end?.date,
+                title: event.summary || 'No Title',
+                startTime: formatTo12HourTime(new Date(event.start?.dateTime ?? event.start?.date ?? '')),
+                endTime: formatTo12HourTime(new Date(event.end?.dateTime ?? event.end?.date ?? '')),
+                day: new Date(event.start?.dateTime ?? event.start?.date ?? ''),
+                color: "bg-[#D8FFD9]"
             })));
         }
 
         pageToken = response.data.nextPageToken ?? undefined; // Check for the next page token
     } while (pageToken);
 
+    console.log(events)
     return events;
 }
 

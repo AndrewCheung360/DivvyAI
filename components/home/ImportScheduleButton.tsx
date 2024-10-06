@@ -2,10 +2,24 @@
 import React from "react"
 import Image from "next/image"
 import UploadIcon from "../../public/upload.svg"
+import { getAllCalendarEvents } from "@/utils/calActions"
 
-export default function ImportScheduleButton(){
+type ImportScheduleButtonProps = {
+    clerkId: string,
+    setEvents: React.Dispatch<React.SetStateAction<any>>
+}
+
+
+export default function ImportScheduleButton({clerkId, setEvents}: ImportScheduleButtonProps) {
     return (
-        <button className = "w-[262px] h-[66px] bg-[#F4F4F4] rounded-[50px] flex justify-center items-center border-2 border-[#141414] gap-x-3 hover:bg-[#D7F066] transition-transform duration-200 hover:scale-110 hover:cursor-pointer">
+        <button className = "w-[262px] h-[66px] bg-[#F4F4F4] rounded-[50px] flex justify-center items-center border-2 border-[#141414] gap-x-3 hover:bg-[#dbdbdb] cursor-pointer"
+            onClick = {() => {
+                getAllCalendarEvents(clerkId).then((events) => {
+                    setEvents(events)
+                }
+                )
+            }}
+        >
             <div>
                 <Image src = {UploadIcon} alt = "Upload Icon" width = {20} height = {20}/>
             </div>
