@@ -1,5 +1,9 @@
 "use client"
 import React, { useRef, useState } from "react"
+import { Button } from "@/components/ui/button"
+import FileIcon from "/public/file_icon.svg"
+import Image from "next/image"
+import FileBadge from "../ui/filebadge"
 
 export default function FileUploadForm() {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -73,4 +77,47 @@ export default function FileUploadForm() {
             </div>
         </form>
     );
+}
+
+
+export function UploadAssignment() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    // Only allow a PDF file
+    if (file && file.type === "application/pdf") {
+        setSelectedFile(file);
+    } else {
+        alert("Please select a PDF file.");
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      <label className="text-[#141414] font-[400] text-[16px]">
+        Upload Assignment (PDF files only)
+      </label>
+      <div className="flex items-center w-[580px] mt-[16px] ">
+        <input
+          type="file"
+          accept=".pdf"
+          multiple
+          onChange={handleFileChange}
+          className="hidden size-full"
+          id="assignmentUpload"
+        />
+        <label
+          htmlFor="assignmentUpload"
+          className="flex items-center size-full text-[14px] transition cursor:pointer px-[22px] py-[17px] bg-[#F4F4F4] border-[1px] border-[#141414] rounded-[15px]"
+        >
+            <div className="flex gap-2">
+                <Image src={FileIcon} alt="File Icon" width={15} height={15} />
+                <div>Select file(s) to upload</div>
+            </div>
+        </label>
+      </div>
+      {selectedFile && <FileBadge name={selectedFile.name} />}
+    </div>
+  );
 }

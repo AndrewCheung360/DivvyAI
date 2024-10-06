@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ClockIcon from "/public/clock.svg";
+import Image from 'next/image';
  
 import {
   Select,
@@ -30,9 +31,9 @@ export function SelectScrollable(props: SelectScrollableProps) {
       <SelectTrigger className="w-[280px]">
         <SelectValue placeholder={
           <div className="flex gap-2 justify-center items-center">
-            {/* <div>
-              <img src = {ClockIcon} alt = "ClockIcon" width = {10} height = {15}/>
-            </div> */}
+            <div>
+              <Image src = {ClockIcon} alt = "ClockIcon" width = {15} height = {15}/>
+            </div>
             <span>Estimated Time Needed</span>
           </div>
           } />
