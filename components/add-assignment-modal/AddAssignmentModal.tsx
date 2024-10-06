@@ -5,8 +5,8 @@ import PrioritySelector from '../choose-priority/ChoosePriority';
 import FormInput from '../form-input/FormInput';
 import clipboardIcon from '../../public/clipboard.svg';
 import whiteboardIcon from '../../public/whiteboard.svg';
-import assignmentIcon from '../../public/assignment.svg';
 import xIcon from '../../public/x.svg';
+import assignmentIcon from '../../public/Assignment.svg'
 import SelectEstimatedTime from '../estimated-time/EstimatedTime';
 import DeadlineButton from '../choose-deadline/ChooseDeadlineButton';
 import Image from 'next/image';
