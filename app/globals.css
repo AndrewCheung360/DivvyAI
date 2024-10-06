@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -67,11 +66,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.sx-react-calendar-wrapper {
-  width: 1200px;
-  max-width: 80vw;
-  height: 700px;
-  max-height: 90vh;
 }
