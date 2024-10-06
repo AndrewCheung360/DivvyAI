@@ -19,15 +19,34 @@ import FormInput from "@/components/form-input/FormInput";
 import Clipboard from "/public/clipboard.svg";
 import Whiteboard from "/public/whiteboard.svg";
 import TaskModal from "@/components/task-modal/TaskModal";
+import Scheduler from "@/components/home/Scheduler";
+
 
 export default function Index() {
   const [assignment, setAssignment] = useState<string>("");
   const [corseName, setCourseName] = useState<string>("");
   return (
     <>
-    <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex flex-col justify-start items-center">
-      <AddAssignmentModal/>
-   </div>
+    <div className = "grid grid-cols-5 w-screen h-screen">
+      <div className="col-span-1 z-0">
+        <SideBar/>
+      </div>
+
+      <div className="col-span-4 h-screen z-40">
+        <div className="flex flex-row justify-end pt-4 gap-x-4 pr-10">
+          {/* Add Assignment Button */}
+          <AddButton/>
+          {/* Import Calendar Button */}
+          <ImportScheduleButton/>
+        </div>
+
+        <div className="pt-4 px-8">
+          {/* Calendar */}
+          <Scheduler />
+        </div>
+        
+      </div>
+    </div>
     </>
   )
 }

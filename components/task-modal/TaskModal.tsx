@@ -27,7 +27,7 @@ export default function TaskModal({taskName, timeLeft, topicSummary, attachmentN
                     <Image src = {arrowIcon} alt = "arrow icon" width = {11} height = {11}/>
                 </div>
             </div>
-            <div className = "w-[40%] h-[100%] bg-white flex flex-col items-center pl-[30px] pr-[40px] pt-[39px] gap-y-[30px] rounded-bl-[30px]">
+            <div className = "w-[40%] h-[100%] bg-white flex flex-col items-center pl-[30px] pr-[40px] pt-[39px] gap-y-[40px] rounded-bl-[30px]">
                 <div className = "w-[80%] flex flex-row items-center justify-start gap-x-4">
                     <div>
                         <Image src = {pencilIcon} alt = "pencil icon" width = {27} height = {27}/>
