@@ -3,14 +3,20 @@ import Image from "next/image";
 import FileIcon from "/public/file_icon.svg"
 import FileBadge from "../ui/filebadge";
 
-export default function UploadReference() {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+export interface UploadAssignmentProps {
+  referenceFiles: File[] | null;
+  setReferenceFiles: React.Dispatch<React.SetStateAction<File[] | null>>
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+} 
+
+export default function UploadReference(props: UploadAssignmentProps) {
+  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     // Only allow PDF files
     const pdfFiles = files.filter(file => file.type === "application/pdf");
-    setSelectedFiles((prevFiles) => [...prevFiles, ...pdfFiles]);
+    props.setReferenceFiles(prevFiles => [...prevFiles || [], ...pdfFiles || []]);
   }
 
 
@@ -24,12 +30,12 @@ export default function UploadReference() {
           type="file"
           accept=".pdf"
           multiple
-          onChange={handleFileChange}
+          onChange={props.onChange}
           className="hidden size-full"
-          id="assignmentUpload"
+          id="referenceUpload"
         />
         <label
-          htmlFor="assignmentUpload"
+          htmlFor="referenceUpload"
           className="flex items-center size-full text-[14px] transition cursor:pointer px-[22px] py-[17px] bg-[#F4F4F4] border-[1px] border-[#141414] rounded-[15px]"
         >
             <div className="flex gap-2">
@@ -38,8 +44,8 @@ export default function UploadReference() {
             </div>
         </label>
       </div>
-      {selectedFiles && (
-        selectedFiles.map((file, idx) => (
+      {props.referenceFiles && (
+        props.referenceFiles.map((file, idx) => (
         <FileBadge key={idx} name={file.name} />
       )))}
     </div>

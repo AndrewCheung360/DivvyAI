@@ -31,7 +31,6 @@ export async function GET(request: NextRequest) {
 
 /* Adds subtask with assignmentId to supabase */
 export async function POST(request: NextRequest) {
-  console.log("hi")
   try {
     const supabase = createClient();
     const body = await request.json();

@@ -15,9 +15,34 @@ export default function AddAssignmentModal({ onClose }: { onClose: () => void })
   const [assignmentName, setAssignmentName] = useState<string>('');
   const [courseName, setCourseName] = useState<string>('');
   const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Critical'>('Low');
+  const [assignmentFile, setAssignmentFile] = useState<File | null>(null);
+  const [referenceFiles, setReferenceFiles] = useState<File[] | null>(null);
 
+  console.log("AssignmentFile", assignmentFile)
+  console.log("ReferenceFile", referenceFiles)
   const handlePriorityChange = (level: 'Low' | 'Medium' | 'High' | 'Critical') => {
     setPriority(level);
+  };
+
+  // Handle change for the assignment file
+  const handleAssignmentFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("in assingment file change")
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setAssignmentFile(files[0]); // Only allow one assignment file
+    }
+  };
+
+  // Handle change for reference files (multiple files allowed)
+  const handleReferenceFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("in reference file change")
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setReferenceFiles(prevFiles => {
+        const newFiles = Array.from(files); // Convert FileList to Array
+        return prevFiles ? [...prevFiles, ...newFiles] : newFiles; // Append new files
+      });
+    }
   };
 
   return (
@@ -58,8 +83,16 @@ export default function AddAssignmentModal({ onClose }: { onClose: () => void })
               </div>
             </div>
             <PrioritySelector />
-            <UploadAssignment />
-            <UploadReference />
+            <UploadAssignment
+              assignmentFile={assignmentFile}
+              setAssignmentFile={setAssignmentFile}
+              onChange={handleAssignmentFileChange}
+            />
+            <UploadReference
+              referenceFiles={referenceFiles}
+              setReferenceFiles={setReferenceFiles}
+              onChange={handleReferenceFileChange}
+            />
           </div>
         </div>
 

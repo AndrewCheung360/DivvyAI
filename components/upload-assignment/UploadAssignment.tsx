@@ -80,15 +80,20 @@ export default function FileUploadForm() {
     );
 }
 
+export interface UploadAssignmentProps {
+    assignmentFile: File | null;
+    setAssignmentFile: React.Dispatch<React.SetStateAction<File | null>>
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+} 
 
-export function UploadAssignment() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+export function UploadAssignment(props: UploadAssignmentProps) {
+//   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     // Only allow a PDF file
     if (file && file.type === "application/pdf") {
-        setSelectedFile(file);
+        props.setAssignmentFile(file);
     } else {
         alert("Please select a PDF file.");
     }
@@ -104,7 +109,7 @@ export function UploadAssignment() {
           type="file"
           accept=".pdf"
           multiple
-          onChange={handleFileChange}
+          onChange={props.onChange}
           className="hidden size-full"
           id="assignmentUpload"
         />
@@ -118,7 +123,7 @@ export function UploadAssignment() {
             </div>
         </label>
       </div>
-      {selectedFile && <FileBadge name={selectedFile.name} />}
+      {props.assignmentFile && <FileBadge name={props.assignmentFile.name} />}
     </div>
   );
 }
