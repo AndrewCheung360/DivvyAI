@@ -188,8 +188,8 @@ export async function packQuestionsIntoFreeSlots(
     timeMin: Date,
     timeMax: Date,
     assignmentName: string,
+    assignmentId: string,
     description: string,
-
 ) {
     const freeTimes = await getFreeTimeSlots({ clerkUserId, timeMin, timeMax });
     if (!freeTimes || freeTimes.length === 0) {
@@ -217,6 +217,21 @@ export async function packQuestionsIntoFreeSlots(
                         end: eventEnd
                     },
                     clerkUserId: clerkUserId
+                });
+
+                // Add the subtask to supabase
+                const subtask = await fetch(`/api/subtask?assignment_id=${assignmentId}`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: `${assignmentName} - ${question}`,
+                        notes: description,
+                        start_time: eventStart.toISOString(),
+                        end_time: eventEnd.toISOString(),
+                        assignment_id: assignmentId
+                    })
                 });
 
                 // Update freeDuration and move to next question
