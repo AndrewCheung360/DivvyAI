@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { packQuestionsIntoFreeSlots } from '@/utils/calActions';
 import { useAuth } from '@clerk/nextjs';
 import { Dayjs } from 'dayjs';
+import { main } from '../../utils/openai/openAiAlgo'
 
 type AddAssignmentModalProps = {
   onClose: () => void;
@@ -27,7 +28,11 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
   const [deadline, setDeadline] = useState<Date>();
   const [deadlineDate, setDeadlineDate] = useState<Date | null>(null)
   const [deadlineTime, setDeadlineTime] = useState<Dayjs | null>(null)
+  const [assignmentFile, setAssignmentFile] = useState<File | null>(null);
+  const [referenceFiles, setReferenceFiles] = useState<File[] | null>(null);
 
+  console.log("AssignmentFile", assignmentFile)
+  console.log("ReferenceFile", referenceFiles)
   const handlePriorityChange = (level: 'Low' | 'Medium' | 'High' | 'Critical') => {
     setPriority(level);
   };
@@ -40,6 +45,27 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
       setDeadline(deadline);
     }
   }
+
+  // Handle change for the assignment file
+  const handleAssignmentFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("in assingment file change")
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setAssignmentFile(files[0]); // Only allow one assignment file
+    }
+  };
+
+  // Handle change for reference files (multiple files allowed)
+  const handleReferenceFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("in reference file change")
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setReferenceFiles(prevFiles => {
+        const newFiles = Array.from(files); // Convert FileList to Array
+        return prevFiles ? [...prevFiles, ...newFiles] : newFiles; // Append new files
+      });
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -79,8 +105,16 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
               </div>
             </div>
             <PrioritySelector />
-            <UploadAssignment />
-            <UploadReference />
+            <UploadAssignment
+              assignmentFile={assignmentFile}
+              setAssignmentFile={setAssignmentFile}
+              onChange={handleAssignmentFileChange}
+            />
+            <UploadReference
+              referenceFiles={referenceFiles}
+              setReferenceFiles={setReferenceFiles}
+              onChange={handleReferenceFileChange}
+            />
           </div>
         </div>
 
@@ -91,18 +125,19 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
           <button className="w-[230px] h-[54px] bg-[#141414] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110"
             onClick = {
               () => {
-                const questions: [string, number][] = [["q1", 60], ["q2", 30], ["q3", 45], ["q4", 50]];
-                combineDeadline();
-                if (!questions || !userId || !deadline || !assignmentName) return;
+                main(0, 120).then((questions) => {
+                  combineDeadline();
+                  if (!questions || !userId || !deadline || !assignmentName) return;
 
-                const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
-                  .then((events) => {
-                    setEvents(events)
-                  })
-                
-                console.log("Scheduled events: ", scheduledEvents);
-                
-                onClose();
+                  const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
+                    .then((events) => {
+                      setEvents(events)
+                    })
+                  
+                  console.log("Scheduled events: ", scheduledEvents);
+                  
+                  onClose();
+                });
               }
             }
           >
