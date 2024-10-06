@@ -1,29 +1,6 @@
 import React, { useState, useEffect } from "react";
+import TaskModal from '../task-modal/TaskModal'
 
-// Modal Component
-interface ModalProps {
-  show: boolean;
-  onClose: () => void;
-  event: Event | null;
-}
-
-const Modal: React.FC<ModalProps> = ({ show, onClose, event }) => {
-  if (!show || !event) return null;
-
-  return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-4 rounded-lg shadow-lg">
-        <h2 className="text-lg font-bold mb-2">{event.title}</h2>
-        <p>
-          {event.startTime} - {event.endTime}
-        </p>
-        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
-  );
-};
 
 // Helper function to get the current week and month
 const getCurrentWeek = (): Date[] => {
@@ -112,13 +89,18 @@ export default function Scheduler({events = []} : SchedulerType) {
   const getCurrentTimeOffset = (): number => {
     const currentHour = currentTime.getHours();
     const currentMinute = currentTime.getMinutes();
-    const totalMinutes = currentHour * 60 + currentMinute;
-    return ((totalMinutes - 9 * 60) / (15 * 60)) * 100; // assuming calendar starts at 9 AM
+    const totalMinutes = (currentHour) * 60 + currentMinute;
+    return ((totalMinutes - 8 * 60) / (15 * 60)) * 100; // assuming calendar starts at 9 AM
   };
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedEvent(null);
   };
 
   const handleGoToCurrentWeek = () => {
@@ -215,7 +197,20 @@ export default function Scheduler({events = []} : SchedulerType) {
       </div>
 
       {/* Modal for Event Details */}
-      <Modal show={showModal} onClose={() => setShowModal(false)} event={selectedEvent} />
+      {selectedEvent && (
+        <TaskModal
+          taskName={selectedEvent.title}
+          timeLeft={`${selectedEvent.startTime} - ${selectedEvent.endTime}`}
+          topicSummary={"Relevant summary for this task..."}
+          attachmentName={"attachment_name.pdf"}
+          taskProgress={"In progress"}
+          courseName={"CS: 4780"}
+          assignmentName={"Assignment 1"}
+          deadline={selectedEvent.day.toDateString()}
+          progress={70}
+          handleClose={handleCloseModal} 
+        />
+      )}
     </div>
   );
 }
