@@ -27,6 +27,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       const arrayBuffer = await blob?.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
+      console.log(buffer);
+
       return new NextResponse(buffer, {
         status: 200,
         headers: {
