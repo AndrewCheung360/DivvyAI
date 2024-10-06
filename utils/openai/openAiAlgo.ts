@@ -17,21 +17,21 @@ const openai = new OpenAI({
  apiKey: apiKey,
 });
 
-// export async function extractPdfText(buffer: any, directory: string) {
-//   try {
-//     const filePath = path.join(directory, 'output.pdf');
-//     fs.writeFile(filePath, buffer, (err) => {
-//       if (err) {
-//         console.error('Error writing PDF file:', err);
-//       } else {
-//         console.log('PDF file successfully created at:', filePath);
-//       }
-//     });
-//   } catch (error) {
-//     console.error("Error extracting PDF text:", error);
-//     return "";
-//   }
-// }
+export async function extractPdfText(buffer: any, directory: string) {
+  try {
+    const filePath = path.join(directory, 'output.pdf');
+    fs.writeFile(filePath, buffer, (err) => {
+      if (err) {
+        console.error('Error writing PDF file:', err);
+      } else {
+        console.log('PDF file successfully created at:', filePath);
+      }
+    });
+  } catch (error) {
+    console.error("Error extracting PDF text:", error);
+    return "";
+  }
+}
 
 export async function main(buffer: any, estimatedTime: number){
 //  const extractedText = await extractPdfText(buffer, "../../pdfs");
