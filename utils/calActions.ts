@@ -221,6 +221,8 @@ export async function packQuestionsIntoFreeSlots(
 
     let currentQuestionIndex = 0;
 
+    const events = []
+
     for (const freeTime of freeTimes) {
         let freeDuration = calculateDurationInMinutes(freeTime.start, freeTime.end);
 
@@ -241,6 +243,15 @@ export async function packQuestionsIntoFreeSlots(
                     },
                     clerkUserId: clerkUserId
                 });
+
+                const event = {
+                    title: `${assignmentName} - ${question}`,
+                    startTime: formatTo12HourTime(eventStart),
+                    endTime: formatTo12HourTime(eventEnd),
+                    day: eventStart,
+                    color: "bg-[#D8FFD9]"
+                }
+                events.push(event)
 
                 // Add the subtask to supabase
                 const subtask = await fetch(`/api/subtask?assignment_id=${assignmentId}`, {
@@ -273,5 +284,6 @@ export async function packQuestionsIntoFreeSlots(
     }
 
     // Return true if all questions were packed, false if some were left unassigned
-    return currentQuestionIndex === questions.length;
+    // return currentQuestionIndex === questions.length;
+    return events
 }
