@@ -36,12 +36,12 @@ export default function Index({userId} : {userId: string}) {
           {/* Add Assignment Button */}
           <AddButton/>
           {/* Import Calendar Button */}
-          <ImportScheduleButton/>
+          <ImportScheduleButton clerkId={userId} setEvents={setEvents}/>
         </div>
 
         <div className="pt-4 px-8">
           {/* Calendar */}
-          <Scheduler />
+          <Scheduler events = {events} />
         </div>
         
       </div>
