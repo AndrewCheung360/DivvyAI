@@ -25,19 +25,7 @@ export default function Index() {
   const [corseName, setCourseName] = useState<string>("");
   return (
     <>
-    <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex justify-center items-center">
-      <SideBar/>
-      <TaskModal
-        taskName = "Question 1"
-        timeLeft = "03:02:00"
-        topicSummary = "Self-training is a semi-supervised learning technique where a model is initially trained on a small labeled dataset, and then it uses its own confident predictions on the unlabeled data to iteratively retrain itself. This approach can help leverage large amounts of unlabeled data to improve model performance."
-        attachmentName = "ML_HW4.pdf"
-        taskProgress = "option-one"
-        courseName = "Machine Learning"
-        assignmentName = "ML A4"
-        deadline = "October 5th, 2024"
-        progress = {50}
-      />
+    <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex flex-col justify-start items-center">
     </div>
     </>
   )
