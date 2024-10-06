@@ -25,32 +25,7 @@ export default function Index() {
   return (
     <>
     <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] flex justify-center items-center">
-      {/* <ImportScheduleButton/>
-      <AddButton/> */}
-      {/* <FileUploadForm/>
-      <GetAssignmentForm/>
-      <AddAssignmentModal/> */}
-      {/* <DeadlineButton/> */}
-      {/* <SelectEstimatedTime/> */}
-      {/* <PrioritySelector/> */}
-      {/* <UploadAssignment/> */}
-      {/* <UploadReference/> */}
-      <FormInput 
-        icon={Clipboard} 
-        type={"text"}
-        alt={"Clipboard Icon"} 
-        placeholder={"Name of the assignment"} 
-        setValue={setAssignment}
-        />
-      <FormInput 
-        icon={Whiteboard}
-        type={"text"}
-        alt={"Whiteboard Icon"} 
-        placeholder={"Name of the course"}
-        setValue = {setCourseName}
-        />
-      {assignment}
-      {corseName}
+
     </div>
     </>
   );

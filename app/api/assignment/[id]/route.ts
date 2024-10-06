@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { pinata } from "@/utils/config";
 import { createClient } from "@/utils/supabase/server";
+import { extractPdfText } from "@/utils/openai/openAiAlgo";
 
 /* Gets assignment by supabase id from supabase */
 export async function GET(request: NextRequest, { params }: { params: { id: string }}) {
@@ -28,6 +29,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       const buffer = Buffer.from(arrayBuffer);
 
       console.log(buffer);
+      // const extractedText = await extractPdfText("../../pdfs", buffer);
+      // console.log(extractedText);
+      return NextResponse.json({ text: "here" }, { status: 200 });
 
       return new NextResponse(buffer, {
         status: 200,
