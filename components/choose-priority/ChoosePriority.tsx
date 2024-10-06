@@ -16,7 +16,7 @@ export default function PrioritySelector() {
             key={priority}
             onClick={() => setSelectedPriority(priority)}
             className={cn(
-              "py-2 px-4 h-[48px] w-[140px] rounded-[30px] border transition-colors text-[14px]",
+              "py-2 px-4 h-[48px] w-[140px] rounded-[30px] border transition-transform text-[14px] duration-200 hover:scale-105",
               selectedPriority === priority
                 ? "bg-[#D7F066] border-black"
                 : "bg-[#EBF7B6] border-gray-300"

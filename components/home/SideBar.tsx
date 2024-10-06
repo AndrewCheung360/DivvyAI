@@ -79,7 +79,7 @@ export default function SideBar() {
   const emptyLines = 11 - todos.length > 0 ? 10 - todos.length : 0
 
   return (
-    <div className="absolute top-0 w-full h-full">
+    <div className="absolute top-0 w-full h-[99%]">
       <div className="bg-white w-[78px] h-[88px] absolute z-10 left-[18%] flex justify-end items-center pr-5 rounded-r-[30px]">
         <div>
           <Image src={chevronLeft} alt="arrow icon" width={24} height={24} />
@@ -136,7 +136,7 @@ export default function SideBar() {
                   />
                 ) : (
                   <span
-                    className="text-[#141414] text-sm cursor-pointer"
+                    className="text-[#141414] text-sm cursor-text"
                     onClick={() => toggleEditTask(todo.id)}
                   >
                     {todo.text}
