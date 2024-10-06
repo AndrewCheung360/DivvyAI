@@ -25,7 +25,7 @@ const formatDate = (date: Date) => {
   return { weekday, dayOfMonth };
 };
 
-interface Event {
+export interface Event {
   title: string;
   startTime: string;
   endTime: string;
@@ -33,19 +33,26 @@ interface Event {
   color: string;
 }
 
-export default function Scheduler() {
-  const [events, setEvents] = useState<Event[]>([
-    { title: "CS: 4780", startTime: "09:00 AM", endTime: "10:30 AM", day: new Date('2024-10-08'), color: "bg-[#FFD8D8]" },
-    { title: "Question #1", startTime: "11:00 AM", endTime: "01:30 PM", day: new Date('2024-10-08'), color: "bg-[#FEFE91]" },
-    { title: "INFO: 4125", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-09'), color: "bg-[#D8FFD9]" },
-    { title: "INFO: 2040", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-10'), color: "bg-[#D8F9FF]" },
-  ]);
+
+type SchedulerType = {
+  events: Event[];
+}
+
+export default function Scheduler({events = []} : SchedulerType) {
+  // const [events, setEvents] = useState<Event[]>([
+  //   { title: "CS: 4780", startTime: "09:00 AM", endTime: "10:30 AM", day: new Date('2024-10-07'), color: "bg-[#FFD8D8]" },
+  //   { title: "Question #1", startTime: "11:00 AM", endTime: "01:30 PM", day: new Date('2024-10-07'), color: "bg-[#FEFE91]" },
+  //   { title: "INFO: 4125", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-08'), color: "bg-[#D8FFD9]" },
+  //   { title: "INFO: 2040", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-09'), color: "bg-[#D8F9FF]" },
+  // ]);
 
   const [week, setWeek] = useState(getCurrentWeek());
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Ensure events is always an array
+  const safeEvents = Array.isArray(events) ? events : [];
 
   // Times from 9 AM to 11 PM, properly switching from AM to PM
   const hours = Array.from({ length: 16 }, (_, i) => {
@@ -159,7 +166,7 @@ export default function Scheduler() {
             ))}
 
             {/* Render Events */}
-            {events
+            {safeEvents
               .filter(event => isSameDay(event.day, day))
               .map((event, eventIdx) => (
                 <div
