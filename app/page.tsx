@@ -7,10 +7,8 @@ import SideBar from "@/components/home/SideBar";
 
 export default function Index() {
   return (
-    <>
-    <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex justify-center items-center">
-      <SideBar/>
-    </div>
-    </>
+      <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex justify-center items-center">
+        <SideBar/>
+      </div>
   );
 }
