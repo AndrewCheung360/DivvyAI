@@ -24,6 +24,8 @@ export default function Index() {
   const [corseName, setCourseName] = useState<string>("");
   return (
     <>
+
+    <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] flex justify-center items-center">
     <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] pt-10 flex flex-col justify-start items-center">
       <TaskModal
         taskName = "Question 1"
