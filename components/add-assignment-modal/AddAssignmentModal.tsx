@@ -10,11 +10,23 @@ import assignmentIcon from '../../public/Assignment.svg'
 import SelectEstimatedTime from '../estimated-time/EstimatedTime';
 import DeadlineButton from '../choose-deadline/ChooseDeadlineButton';
 import Image from 'next/image';
+import { packQuestionsIntoFreeSlots } from '@/utils/calActions';
+import { useAuth } from '@clerk/nextjs';
+import { Dayjs } from 'dayjs';
 
-export default function AddAssignmentModal({ onClose }: { onClose: () => void }) {
+type AddAssignmentModalProps = {
+  onClose: () => void;
+  setEvents: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export default function AddAssignmentModal({ onClose, setEvents }: AddAssignmentModalProps) {
+  const { userId } = useAuth();
   const [assignmentName, setAssignmentName] = useState<string>('');
   const [courseName, setCourseName] = useState<string>('');
   const [priority, setPriority] = useState<'Low' | 'Medium' | 'High' | 'Critical'>('Low');
+  const [deadline, setDeadline] = useState<Date>();
+  const [deadlineDate, setDeadlineDate] = useState<Date | null>(null)
+  const [deadlineTime, setDeadlineTime] = useState<Dayjs | null>(null)
   const [assignmentFile, setAssignmentFile] = useState<File | null>(null);
   const [referenceFiles, setReferenceFiles] = useState<File[] | null>(null);
 
@@ -23,6 +35,15 @@ export default function AddAssignmentModal({ onClose }: { onClose: () => void })
   const handlePriorityChange = (level: 'Low' | 'Medium' | 'High' | 'Critical') => {
     setPriority(level);
   };
+
+  const combineDeadline = () => {
+    if (deadlineDate && deadlineTime) {
+      const deadline = new Date(deadlineDate);
+      deadline.setHours(deadlineTime.hour());
+      deadline.setMinutes(deadlineTime.minute());
+      setDeadline(deadline);
+    }
+  }
 
   // Handle change for the assignment file
   const handleAssignmentFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +99,7 @@ export default function AddAssignmentModal({ onClose }: { onClose: () => void })
                 setValue={setCourseName}
               />
               <div className="w-full flex flex-row items-center justify-between">
-                <DeadlineButton />
+                <DeadlineButton deadlineDate={deadlineDate} deadlineTime={deadlineTime} setDeadlineDate={setDeadlineDate} setDeadlineTime={setDeadlineTime}/>
                 <SelectEstimatedTime />
               </div>
             </div>
@@ -100,7 +121,24 @@ export default function AddAssignmentModal({ onClose }: { onClose: () => void })
           <button className="w-[155px] h-[54px] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110" onClick={onClose}>
             <span className="text-[#141414] font-light text-lg ">Cancel</span>
           </button>
-          <button className="w-[230px] h-[54px] bg-[#141414] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110">
+          <button className="w-[230px] h-[54px] bg-[#141414] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110"
+            onClick = {
+              () => {
+                const questions: [string, number][] = [["q1", 60], ["q2", 30], ["q3", 45], ["q4", 50]];
+                combineDeadline();
+                if (!questions || !userId || !deadline || !assignmentName) return;
+
+                const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
+                  .then((events) => {
+                    setEvents(events)
+                  })
+                
+                console.log("Scheduled events: ", scheduledEvents);
+                
+                onClose();
+              }
+            }
+          >
             <span className="text-white font-light text-lg">Break down</span>
           </button>
         </div>

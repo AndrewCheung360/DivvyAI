@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import AddAssignmentModal from '../add-assignment-modal/AddAssignmentModal';
 
-export default function AddButton() {
+type AddButtonProps = {
+    setEvents: React.Dispatch<React.SetStateAction<any[]>>;
+};
+
+export default function AddButton({setEvents}: AddButtonProps) {
     // State to manage modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,7 +32,7 @@ export default function AddButton() {
 
             {/* Conditionally render the modal */}
             {isModalOpen && (
-                <AddAssignmentModal onClose={handleCloseModal} />
+                <AddAssignmentModal onClose={handleCloseModal} setEvents={setEvents} />
             )}
         </>
     );

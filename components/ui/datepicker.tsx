@@ -16,14 +16,21 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
-export function DatePickerDemo() {
-  const [date, setDate] = React.useState<Date>();
-  const [time, setTime] = React.useState<Dayjs | null>();
+type DatePickerProps = {
+  deadlineDate: Date | null;
+  deadlineTime: Dayjs | null;
+  setDeadlineDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  setDeadlineTime: React.Dispatch<React.SetStateAction<Dayjs | null>>;
+}
+
+export function DatePickerDemo({deadlineDate, deadlineTime, setDeadlineDate, setDeadlineTime }: DatePickerProps) {
+  // const [date, setDate] = React.useState<Date>();
+  // const [time, setTime] = React.useState<Dayjs | null>();
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleClearCalender = () => {
-    setDate(undefined);
-    setTime(null);
+    setDeadlineDate(null);
+    setDeadlineTime(null);
   };
 
   const handleCloseCalender = () => {
@@ -37,7 +44,7 @@ export function DatePickerDemo() {
           variant={'outline'}
           className={cn(
             'w-[280px] justify-start text-left font-normal',
-            !date && 'text-muted-foreground'
+            !deadlineDate && 'text-muted-foreground'
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -45,20 +52,20 @@ export function DatePickerDemo() {
             <Image src={HourglassIcon} alt="Hourglass Icon" width={10} height={15} />
           </div>
           <div className="flex gap-1">
-            <div>{date ? format(date, 'PPP') : <span>Choose a Deadline Date</span>}</div>
-            <div>{`${date && time ? 'at ' + format(time.toISOString(), 'p') : ''}`}</div>
+            <div>{deadlineDate ? format(deadlineDate, 'PPP') : <span>Choose a Deadline Date</span>}</div>
+            <div>{`${deadlineDate && deadlineTime ? 'at ' + format(deadlineTime.toISOString(), 'p') : ''}`}</div>
           </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex flex-col items-center w-auto p-0 h-[460px] gap-y-2">
-        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        <Calendar mode="single" selected={deadlineDate || undefined} onSelect={(day) => setDeadlineDate(day || null)} initialFocus />
         <div className="w-auto flex flex-col items-center gap-y-5">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['TimePicker']}>
               <TimePicker
                 label="Select Deadline"
-                value={time}
-                onChange={(newValue) => setTime(newValue)}
+                value={deadlineTime}
+                onChange={(newValue) => setDeadlineTime(newValue)}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -66,7 +73,7 @@ export function DatePickerDemo() {
             <Button
               className={cn(
                 'w-[100px] bg-accent hover:text-white justify-center text-left font-normal text-black',
-                !date && 'text-muted-foreground'
+                !deadlineDate && 'text-muted-foreground'
               )}
               onClick={handleClearCalender}
             >
@@ -75,7 +82,7 @@ export function DatePickerDemo() {
             <Button
               className={cn(
                 'w-[100px] bg-[#D7F066] hover:bg-[#141414] hover:text-[#D7F066] text-[#141414] justify-center text-left font-normal',
-                !date && 'text-muted-foreground'
+                !deadlineDate && 'text-muted-foreground'
               )}
               onClick={handleCloseCalender}
             >
