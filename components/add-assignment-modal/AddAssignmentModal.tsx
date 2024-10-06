@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { packQuestionsIntoFreeSlots } from '@/utils/calActions';
 import { useAuth } from '@clerk/nextjs';
 import { Dayjs } from 'dayjs';
+import { main } from '../../utils/openai/openAiAlgo'
 
 type AddAssignmentModalProps = {
   onClose: () => void;
@@ -124,18 +125,19 @@ export default function AddAssignmentModal({ onClose, setEvents }: AddAssignment
           <button className="w-[230px] h-[54px] bg-[#141414] flex justify-center items-center border-2 border-[#141414] rounded-[50px] transition-transform duration-200 hover:scale-110"
             onClick = {
               () => {
-                const questions: [string, number][] = [["q1", 60], ["q2", 30], ["q3", 45], ["q4", 50]];
-                combineDeadline();
-                if (!questions || !userId || !deadline || !assignmentName) return;
+                main(0, 120).then((questions) => {
+                  combineDeadline();
+                  if (!questions || !userId || !deadline || !assignmentName) return;
 
-                const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
-                  .then((events) => {
-                    setEvents(events)
-                  })
-                
-                console.log("Scheduled events: ", scheduledEvents);
-                
-                onClose();
+                  const scheduledEvents = packQuestionsIntoFreeSlots(questions, userId, new Date(), deadline, assignmentName, "28", "HELLO WORLD")
+                    .then((events) => {
+                      setEvents(events)
+                    })
+                  
+                  console.log("Scheduled events: ", scheduledEvents);
+                  
+                  onClose();
+                });
               }
             }
           >
