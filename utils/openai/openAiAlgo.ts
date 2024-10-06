@@ -17,7 +17,7 @@ const openai = new OpenAI({
 });
 
 
-export async function extractPdfText(buffer:any) {
+export async function extractPdfText(buffer:any, directory: string) {
  try {
   fs.writeFile('../../pdfs/output.pdf', buffer, (err) => {
     if (err) {
@@ -33,7 +33,7 @@ export async function extractPdfText(buffer:any) {
 }
 
 export async function main(buffer: any, estimatedTime: number){
- const extractedText = await extractPdfText(buffer);
+ const extractedText = await extractPdfText(buffer, "../../pdfs");
  console.log("This is the extracted text", extractedText);
 
  const prompt = `Analyze and break down the following assignment and divide it into manageable questions or tasks. For each task, provide an estimated time to complete based on the total time of ${estimatedTime} minutes. Then provide the output in the following format:

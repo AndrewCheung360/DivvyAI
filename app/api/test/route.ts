@@ -29,17 +29,17 @@ export async function GET(request: NextRequest) {
       const buffer = Buffer.from(arrayBuffer);
 
       console.log(buffer);
-      try {
-        const extractedText = await extractPdfText(buffer);
-        console.log("Extracted text:", extractedText);
-        return NextResponse.json({ text: extractedText }, { status: 200 });
-      } catch (extractError) {
-        console.log("Error extracting text:", extractError);
-        return NextResponse.json(
-          { error: "Error extracting text from PDF" },
-          { status: 500 }
-        );
-      }
+      // try {
+      //   const extractedText = await extractPdfText(buffer);
+      //   console.log("Extracted text:", extractedText);
+      //   return NextResponse.json({ text: extractedText }, { status: 200 });
+      // } catch (extractError) {
+      //   console.log("Error extracting text:", extractError);
+      //   return NextResponse.json(
+      //     { error: "Error extracting text from PDF" },
+      //     { status: 500 }
+      //   );
+      // }
       
       // console.log(extractedText);
       // return NextResponse.json({ text: extractedText }, { status: 200 });
