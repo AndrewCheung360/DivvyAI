@@ -1,5 +1,8 @@
 import './globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+import Index from '../app/page'
+import Signin from '../app/signin/page'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -11,12 +14,23 @@ export const metadata = {
   description: 'This is our Big Red Hacks 2024 Project'
 };
 
+const { userId } = auth();
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body>
-          <main>{children}</main>
+          <main>
+            {/* {children} */}
+            <SignedIn>
+              <Index userId={userId!} />
+            </SignedIn>
+            <SignedOut>
+              <Signin />
+            </SignedOut>
+
+          </main>
         </body>
       </html>
     </ClerkProvider>
