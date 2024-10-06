@@ -26,7 +26,8 @@ export default function Index() {
   return (
     <>
     <div className = "w-[100vw] bg-[#F4f4f4] h-[100vh] flex flex-col justify-start items-center">
-    </div>
+      <AddAssignmentModal/>
+   </div>
     </>
   )
 }

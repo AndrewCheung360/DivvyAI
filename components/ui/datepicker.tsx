@@ -54,13 +54,14 @@ export function DatePickerDemo() {
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex-col justify-center items-center w-auto p-0 ">
+      <PopoverContent className="flex flex-col items-center w-auto p-0 h-[460px] gap-y-2">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
           initialFocus
         />
+        <div className = "w-auto flex flex-col items-center gap-y-5">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['TimePicker']}>
             <TimePicker
@@ -73,7 +74,7 @@ export function DatePickerDemo() {
         <div className="flex justify-center gap-8">
           <Button
             className={cn(
-              "w-[100px] bg-accent justify-start text-left font-normal text-black",
+              "w-[100px] bg-accent hover:text-white justify-center text-left font-normal text-black",
               !date && "text-muted-foreground"
             )}
             onClick={handleClearCalender}
@@ -81,14 +82,19 @@ export function DatePickerDemo() {
           </Button>
           <Button
             className={cn(
-              "w-[100px] bg-[#D7F066] justify-start text-left font-normal text-black",
+              "w-[100px] bg-[#D7F066] hover:bg-[#141414] hover:text-[#D7F066] text-[#141414] justify-center text-left font-normal",
               !date && "text-muted-foreground"
             )}
             onClick={handleCloseCalender}
           >
-          Done
+            <span className = " ">
+              Done
+            </span>
           </Button>
         </div>
+
+        </div>
+        
       </PopoverContent>
     </Popover>
   )
