@@ -22,12 +22,12 @@ type TaskModalProps = {
 export default function TaskModal({taskName, timeLeft, topicSummary, attachmentName, taskProgress, courseName, assignmentName, deadline, progress} : TaskModalProps) {
     return(
         <div className = "w-[100%] h-[95%] relative flex justify-center flex-grow">
-            <div className = "w-[78px] h-[88px] bg-white absolute left-[22%] rounded-l-[30px] flex items-center pl-4">
+            <div className = "w-[78px] h-[88px] bg-white absolute left-[27%] rounded-l-[30px] flex items-center pl-4">
                 <div>
                     <Image src = {arrowIcon} alt = "arrow icon" width = {11} height = {11}/>
                 </div>
             </div>
-            <div className = "w-[50%] h-full bg-white flex flex-col items-center pl-[30px] pr-[40px] pt-[39px] gap-y-[51px] rounded-bl-[30px]">
+            <div className = "w-[40%] h-[100%] bg-white flex flex-col items-center pl-[30px] pr-[40px] pt-[39px] gap-y-[30px] rounded-bl-[30px]">
                 <div className = "w-[80%] flex flex-row items-center justify-start gap-x-4">
                     <div>
                         <Image src = {pencilIcon} alt = "pencil icon" width = {27} height = {27}/>
@@ -36,7 +36,7 @@ export default function TaskModal({taskName, timeLeft, topicSummary, attachmentN
                         Task details
                     </span>
                 </div>
-                <div className = "w-[80%] flex flex-col gap-y-[72px]">
+                <div className = "w-[80%] flex flex-col gap-y-[32px]">
                     <div className = "w-full flex flex-col gap-y-[24px]">
                         <TaskInfo title = {"Task name"} info={taskName}/>
                         <TaskInfo title = {"Time left"} info={timeLeft}/>
@@ -150,7 +150,7 @@ const ProgressComponent = ({progress} : ProgressType) => {
             <span className = "text-[#141414] font-light">
                 Progress
             </span>
-            <Progress value = {50}/>
+            <Progress value = {70}/>
         </div>
 
     )
