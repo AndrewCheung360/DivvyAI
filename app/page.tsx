@@ -13,6 +13,7 @@ import PrioritySelector from "@/components/choose-priority/ChoosePriority";
 import { UploadAssignment } from "@/components/upload-assignment/UploadAssignment";
 import UploadReference from "@/components/upload-reference/UploadReference";
 import FormInput from "@/components/form-input/FormInput";
+import Scheduler from "@/components/home/Scheduler";
 
 
 import Clipboard from "/public/clipboard.svg";
@@ -24,7 +25,8 @@ export default function Index() {
   const [corseName, setCourseName] = useState<string>("");
   return (
     <>
-    <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] flex justify-center items-center">
+    <Scheduler/>
+    {/* <div className = "w-[100vw] bg-[#F4f4f4] h-[150vh] flex justify-center items-center"> */}
       {/* <ImportScheduleButton/>
       <AddButton/> */}
       {/* <FileUploadForm/>
@@ -35,7 +37,7 @@ export default function Index() {
       {/* <PrioritySelector/> */}
       {/* <UploadAssignment/> */}
       {/* <UploadReference/> */}
-      <FormInput 
+      {/* <FormInput 
         icon={Clipboard} 
         type={"text"}
         alt={"Clipboard Icon"} 
@@ -51,7 +53,7 @@ export default function Index() {
         />
       {assignment}
       {corseName}
-    </div>
+    </div> */}
     </>
   );
 }
