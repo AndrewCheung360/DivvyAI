@@ -254,19 +254,19 @@ export async function packQuestionsIntoFreeSlots(
                 events.push(event)
 
                 // Add the subtask to supabase
-                const subtask = await fetch(`/api/subtask?assignment_id=${assignmentId}`, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: `${assignmentName} - ${question}`,
-                        notes: description,
-                        start_time: eventStart.toISOString(),
-                        end_time: eventEnd.toISOString(),
-                        assignment_id: assignmentId
-                    })
-                });
+                // const subtask = await fetch(`/api/subtask?assignment_id=${assignmentId}`, {
+                //     method: "POST",
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify({
+                //         name: `${assignmentName} - ${question}`,
+                //         notes: description,
+                //         start_time: eventStart.toISOString(),
+                //         end_time: eventEnd.toISOString(),
+                //         assignment_id: assignmentId
+                //     })
+                // });
 
                 // Update freeDuration and move to next question
                 freeDuration -= questionDuration;

@@ -27,6 +27,11 @@ export default function Index() {
 
   const [events, setEvents] = useState<Event[]>([])
 
+  useEffect(() => {
+      console.log("Use Effect Running")
+      console.log(events)
+  }, [events])
+
   return (
     <>
     <div className = "grid grid-cols-5 w-screen h-screen">
@@ -36,7 +41,7 @@ export default function Index() {
 
       <div className="col-span-4 h-screen z-40">
         <div className="flex flex-row justify-end pt-4 gap-x-4 pr-10">
-          <AddButton/>
+          <AddButton setEvents={setEvents}/>
           {/* Import Calendar Button */}
           <ImportScheduleButton clerkId={userId!} setEvents={setEvents}/>
         </div>
