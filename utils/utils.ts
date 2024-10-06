@@ -14,3 +14,21 @@ export function encodedRedirect(
 ) {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 }
+
+export type TimeInterval = {
+  start: Date,  // ISO string format
+  end: Date     // ISO string format
+}
+
+export function calculateDurationInMinutes(interval: TimeInterval): number {
+  const startDate = new Date(interval.start);
+  const endDate = new Date(interval.end);
+
+  // Calculate the difference in milliseconds
+  const diffInMilliseconds = endDate.getTime() - startDate.getTime();
+
+  // Convert milliseconds to minutes
+  const durationInMinutes = diffInMilliseconds / (1000 * 60);
+
+  return durationInMinutes;
+}
