@@ -5,6 +5,7 @@ import FileIcon from "/public/file_icon.svg"
 import Image from "next/image"
 import FileBadge from "../ui/filebadge"
 
+/* Form for uploading assignment file */
 export default function FileUploadForm() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -96,7 +97,7 @@ export function UploadAssignment() {
   return (
     <div className="mt-4">
       <label className="text-[#141414] font-[400] text-[16px]">
-        Upload Assignment (PDF files only)
+        Upload assignment (PDF files only)
       </label>
       <div className="flex items-center w-[580px] mt-[16px] ">
         <input

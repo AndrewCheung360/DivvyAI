@@ -10,6 +10,7 @@ import DeadlineButton from "@/components/choose-deadline/ChooseDeadlineButton";
 import SelectEstimatedTime from "@/components/estimated-time/EstimatedTime";
 import PrioritySelector from "@/components/choose-priority/ChoosePriority";
 import { UploadAssignment } from "@/components/upload-assignment/UploadAssignment";
+import UploadReference from "@/components/upload-reference/UploadReference";
 
 export default function Index() {
   return (
@@ -24,6 +25,7 @@ export default function Index() {
       {/* <SelectEstimatedTime/> */}
       {/* <PrioritySelector/> */}
       <UploadAssignment/>
+      {/* <UploadReference/> */}
     </div>
     </>
   );
