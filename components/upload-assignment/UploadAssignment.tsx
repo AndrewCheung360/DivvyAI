@@ -99,7 +99,7 @@ export function UploadAssignment() {
       <label className="text-[#141414] font-[400] text-[16px]">
         Upload assignment (PDF files only)
       </label>
-      <div className="flex items-center w-[580px] mt-[16px] ">
+      <div className="flex items-center w-[580px] mt-[16px] transition-transform duration-200 hover:scale-105 hover:cursor-pointer">
         <input
           type="file"
           accept=".pdf"

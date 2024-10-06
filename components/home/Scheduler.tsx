@@ -1,29 +1,6 @@
 import React, { useState, useEffect } from "react";
+import TaskModal from '../task-modal/TaskModal'
 
-// Modal Component
-interface ModalProps {
-  show: boolean;
-  onClose: () => void;
-  event: Event | null;
-}
-
-const Modal: React.FC<ModalProps> = ({ show, onClose, event }) => {
-  if (!show || !event) return null;
-
-  return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-4 rounded-lg shadow-lg">
-        <h2 className="text-lg font-bold mb-2">{event.title}</h2>
-        <p>
-          {event.startTime} - {event.endTime}
-        </p>
-        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
-  );
-};
 
 // Helper function to get the current week and month
 const getCurrentWeek = (): Date[] => {
@@ -48,7 +25,7 @@ const formatDate = (date: Date) => {
   return { weekday, dayOfMonth };
 };
 
-interface Event {
+export interface Event {
   title: string;
   startTime: string;
   endTime: string;
@@ -56,18 +33,26 @@ interface Event {
   color: string;
 }
 
-export default function Scheduler() {
-  const [events, setEvents] = useState<Event[]>([
-    { title: "CS: 4780", startTime: "09:00 AM", endTime: "10:30 AM", day: new Date('2024-10-08'), color: "bg-[#FFD8D8]" },
-    { title: "Question #1", startTime: "11:00 AM", endTime: "01:30 PM", day: new Date('2024-10-08'), color: "bg-[#FEFE91]" },
-    { title: "INFO: 4125", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-09'), color: "bg-[#D8FFD9]" },
-    { title: "INFO: 2040", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-10'), color: "bg-[#D8F9FF]" },
-  ]);
+
+type SchedulerType = {
+  events: Event[];
+}
+
+export default function Scheduler({events = []} : SchedulerType) {
+  // const [events, setEvents] = useState<Event[]>([
+  //   { title: "CS: 4780", startTime: "09:00 AM", endTime: "10:30 AM", day: new Date('2024-10-07'), color: "bg-[#FFD8D8]" },
+  //   { title: "Question #1", startTime: "11:00 AM", endTime: "01:30 PM", day: new Date('2024-10-07'), color: "bg-[#FEFE91]" },
+  //   { title: "INFO: 4125", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-08'), color: "bg-[#D8FFD9]" },
+  //   { title: "INFO: 2040", startTime: "10:00 AM", endTime: "12:40 PM", day: new Date('2024-10-09'), color: "bg-[#D8F9FF]" },
+  // ]);
 
   const [week, setWeek] = useState(getCurrentWeek());
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [showModal, setShowModal] = useState(false);
+
+  // Ensure events is always an array
+  const safeEvents = Array.isArray(events) ? events : [];
 
   // Times from 9 AM to 11 PM, properly switching from AM to PM
   const hours = Array.from({ length: 16 }, (_, i) => {
@@ -104,13 +89,18 @@ export default function Scheduler() {
   const getCurrentTimeOffset = (): number => {
     const currentHour = currentTime.getHours();
     const currentMinute = currentTime.getMinutes();
-    const totalMinutes = currentHour * 60 + currentMinute;
-    return ((totalMinutes - 9 * 60) / (15 * 60)) * 100; // assuming calendar starts at 9 AM
+    const totalMinutes = (currentHour) * 60 + currentMinute;
+    return ((totalMinutes - 8 * 60) / (15 * 60)) * 100; // assuming calendar starts at 9 AM
   };
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedEvent(null);
   };
 
   const handleGoToCurrentWeek = () => {
@@ -176,7 +166,7 @@ export default function Scheduler() {
             ))}
 
             {/* Render Events */}
-            {events
+            {safeEvents
               .filter(event => isSameDay(event.day, day))
               .map((event, eventIdx) => (
                 <div
@@ -207,7 +197,20 @@ export default function Scheduler() {
       </div>
 
       {/* Modal for Event Details */}
-      <Modal show={showModal} onClose={() => setShowModal(false)} event={selectedEvent} />
+      {selectedEvent && (
+        <TaskModal
+          taskName={selectedEvent.title}
+          timeLeft={`${selectedEvent.startTime} - ${selectedEvent.endTime}`}
+          topicSummary={"Relevant summary for this task..."}
+          attachmentName={"attachment_name.pdf"}
+          taskProgress={"In progress"}
+          courseName={"CS: 4780"}
+          assignmentName={"Assignment 1"}
+          deadline={selectedEvent.day.toDateString()}
+          progress={70}
+          handleClose={handleCloseModal} 
+        />
+      )}
     </div>
   );
 }
