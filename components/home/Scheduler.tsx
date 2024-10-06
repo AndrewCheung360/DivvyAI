@@ -82,7 +82,7 @@ export default function Scheduler() {
   const getCurrentTimeOffset = (): number => {
     const currentHour = currentTime.getHours();
     const currentMinute = currentTime.getMinutes();
-    const totalMinutes = (currentHour +4) * 60 + currentMinute;
+    const totalMinutes = (currentHour) * 60 + currentMinute;
     return ((totalMinutes - 8 * 60) / (15 * 60)) * 100; // assuming calendar starts at 9 AM
   };
 
