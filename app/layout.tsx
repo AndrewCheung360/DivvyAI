@@ -1,6 +1,5 @@
 import './globals.css';
 import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
 import Index from '../app/page'
 import Signin from '../app/signin/page'
 
@@ -14,7 +13,7 @@ export const metadata = {
   description: 'This is our Big Red Hacks 2024 Project'
 };
 
-const { userId } = auth();
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -24,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>
             {/* {children} */}
             <SignedIn>
-              <Index userId={userId!} />
+              <Index />
             </SignedIn>
             <SignedOut>
               <Signin />

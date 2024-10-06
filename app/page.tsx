@@ -19,8 +19,11 @@ import Clipboard from "/public/clipboard.svg";
 import Whiteboard from "/public/whiteboard.svg";
 import TaskModal from "@/components/task-modal/TaskModal";
 import Scheduler, { Event } from "@/components/home/Scheduler";
+import { useAuth } from "@clerk/nextjs";
 
-export default function Index({userId} : {userId: string}) {
+export default function Index() {
+
+  const { isLoaded, userId, sessionId, getToken } = useAuth()
 
   const [events, setEvents] = useState<Event[]>([])
 
@@ -36,7 +39,7 @@ export default function Index({userId} : {userId: string}) {
           {/* Add Assignment Button */}
           <AddButton/>
           {/* Import Calendar Button */}
-          <ImportScheduleButton clerkId={userId} setEvents={setEvents}/>
+          <ImportScheduleButton clerkId={userId!} setEvents={setEvents}/>
         </div>
 
         <div className="pt-4 px-8">
