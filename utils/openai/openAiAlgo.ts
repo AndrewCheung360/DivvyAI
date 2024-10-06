@@ -38,7 +38,7 @@ export async function main(buffer: any, estimatedTime: number){
 //  console.log("This is the extracted text", extractedText)s;
 
  const prompt = `Break down the following assignment and divide it into manageable questions or tasks. For each task, provide an estimated time to complete based on the total time of ${estimatedTime} minutes. Then provide the output in the following format:
- [["Task 1", 15], ([Task 2", 20], ...] and only give this output
+ [["Task 1", 60], ([Task 2", 75], ...] and only give this output
  `;
 
  const extractedText = `
@@ -49,7 +49,7 @@ export async function main(buffer: any, estimatedTime: number){
    
  2. Find the value of the parameter k to make the following limit exist and be finite. 
  What is then the value of the limit?
-   lim(x → 5) (x^2 + kx − 20) / (x − 5)
+   lim(x → 5) (x^2 + kx − 75) / (x − 5)
  
  3. Answer the following questions for the piecewise defined function f(x) described on the right-hand side:
    (a) f(1) = ?
@@ -60,10 +60,10 @@ export async function main(buffer: any, estimatedTime: number){
  const completion = await openai.chat.completions.create({
    model: "gpt-4o-mini",
    messages: [
-       { role: "system", content: `You are a Task Manager System that only ouputs in the form [["Task 1", 15], ["Task 2", 20], ...] with no filler text ${prompt}` },
+       { role: "system", content: `You are a Task Manager System that only ouputs in the form [["Task 1", 60], ["Task 2", 75], ...] with no filler text ${prompt}` },
        {
            role: "user",
-           content: `Uing this assignment: ${extractedText} give me only an output like [["Task 1", 15], ["Task 2", 20], ...]`,
+           content: `Uing this assignment: ${extractedText} give me only an output like [["Task 1", 60], ["Task 2", 75], ...]`,
        },
    ],
  });
