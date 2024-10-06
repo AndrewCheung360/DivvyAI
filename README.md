@@ -83,7 +83,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![image](https://github.com/user-attachments/assets/5cef7e05-1605-45a9-a90d-1a7c97ffe0a7)
+![image](https://github.com/user-attachments/assets/6fe4d923-86c2-41a4-a4fa-a32a92ebd090)
+
+
+![image](https://github.com/user-attachments/assets/feaaab92-398f-4a89-ac67-34c94d5b6e1f)
 
 
 ## Inspiration
