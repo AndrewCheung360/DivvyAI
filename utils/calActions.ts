@@ -133,3 +133,107 @@ export async function getFreeTimeSlots(query: FreeTimeQueryType){
     }
     return freeTimes;
 }
+
+export async function getAllCalendarEvents(clerkUserId: string, timeMin?: Date, timeMax?: Date) {
+    const oAuthClient = await getOAuthClient(clerkUserId);
+    if (!oAuthClient) {
+        return null; // Return early if OAuth client is not available
+    }
+
+    const calendar = google.calendar({ version: 'v3', auth: oAuthClient });
+
+    // Prepare the request parameters
+    const params: any = {
+        calendarId: 'primary',
+        singleEvents: true, // Expands recurring events into individual instances
+        orderBy: 'startTime', // Sort events by start time
+    };
+
+    // Set the time range if provided
+    if (timeMin) {
+        params.timeMin = timeMin.toISOString();
+    }
+    if (timeMax) {
+        params.timeMax = timeMax.toISOString();
+    }
+
+    // Fetch all events
+    const events = [];
+    let pageToken: string | undefined;
+
+    do {
+        const response = await calendar.events.list({
+            ...params,
+            pageToken: pageToken, // Handle pagination
+        });
+
+        if (response.data.items) {
+            events.push(...response.data.items.map((event) => ({
+                summary: event.summary || 'No Title',
+                description: event.description || 'No Description',
+                start: event.start?.dateTime || event.start?.date,
+                end: event.end?.dateTime || event.end?.date,
+            })));
+        }
+
+        pageToken = response.data.nextPageToken ?? undefined; // Check for the next page token
+    } while (pageToken);
+
+    return events;
+}
+
+export async function packQuestionsIntoFreeSlots(
+    questions: [string, number][], // [question, duration in minutes]
+    clerkUserId: string,
+    timeMin: Date,
+    timeMax: Date,
+    assignmentName: string,
+    description: string,
+
+) {
+    const freeTimes = await getFreeTimeSlots({ clerkUserId, timeMin, timeMax });
+    if (!freeTimes || freeTimes.length === 0) {
+        return;
+    }
+
+    let currentQuestionIndex = 0;
+
+    for (const freeTime of freeTimes) {
+        let freeDuration = calculateDurationInMinutes(freeTime.start, freeTime.end);
+
+        while (freeDuration > 0 && currentQuestionIndex < questions.length) {
+            const [question, questionDuration] = questions[currentQuestionIndex];
+
+            // If the free time can fit the current question
+            if (questionDuration <= freeDuration) {
+                const eventStart = freeTime.start;
+                const eventEnd = new Date(eventStart.getTime() + questionDuration * 60 * 1000);
+
+                await createCalendarEvent({
+                    event: {
+                        summary: `${assignmentName} - ${question}`,
+                        description: description,
+                        start: eventStart,
+                        end: eventEnd
+                    },
+                    clerkUserId: clerkUserId
+                });
+
+                // Update freeDuration and move to next question
+                freeDuration -= questionDuration;
+                freeTime.start = eventEnd;
+                currentQuestionIndex++;
+            } else {
+                break; // If the current free slot can't fit the question, move to next free time
+            }
+        }
+
+        // If all questions are packed, exit early
+        if (currentQuestionIndex >= questions.length) {
+            break;
+        }
+    }
+
+    // Return true if all questions were packed, false if some were left unassigned
+    return currentQuestionIndex === questions.length;
+}

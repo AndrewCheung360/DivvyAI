@@ -30,14 +30,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/AndrewCheung360/DivvyAI">
+<!--   <a href="https://github.com/AndrewCheung360/DivvyAI">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
-<h3 align="center">DivvyAI</h3>
+<h1 align="center">DivvyAI</h1>
 
   <p align="center">
-    project_description
+    DivvyAI stops last-minute assignment panic by breaking down tasks and scheduling them into free time. With AI-powered scheduling and course references, students stay on track and stress-free.
     <br />
     <a href="https://github.com/AndrewCheung360/DivvyAI"><strong>Explore the docs »</strong></a>
     <br />
@@ -62,19 +62,19 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
+<!--     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#usage">Usage</a></li> -->
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+<!--     <li><a href="#acknowledgments">Acknowledgments</a></li> -->
   </ol>
 </details>
 
@@ -83,9 +83,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![image](https://github.com/user-attachments/assets/6fe4d923-86c2-41a4-a4fa-a32a92ebd090)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `AndrewCheung360`, `DivvyAI`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `DivvyAI`, `project_description`
+
+![image](https://github.com/user-attachments/assets/feaaab92-398f-4a89-ac67-34c94d5b6e1f)
+
+
+## Inspiration
+The inspiration for DivvyAI came from our personal experience with the stress and panic of tackling a last-minute machine learning assignment. Just this past Friday, we found ourselves rushing to complete the assignments hours before the deadline. Despite knowing the workload ahead, managing our time effectively proved to be a challenge amidst a packed schedule of classes and other commitments. This experience made me realize the need for a tool that not only helps break down assignments into manageable chunks but also intelligently schedules tasks to fit into the small pockets of free time throughout the day. DivvyAI was born from the desire to prevent this kind of last-minute rush and help students stay organized and efficiently complete their assignments stress-free.
+
+## What it does
+With DivvyAI, we hope to solve the last-minute assignment panic that every student knows too well. Our AI-powered tool breaks down large assignments into smaller, manageable tasks and integrates directly with course materials, offering references and resources to keep students on track. DivvyAI optimizes downtime, intelligently scheduling tasks into free moments between classes, meals, or meetings. Key features include automatic task breakdown, smart scheduling that fits assignments into your available time, and course-specific references for personalized guidance. With DivvyAI, students can finish their work ahead of deadlines, stress-free and organized.
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,76 +103,28 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* Next.js
+* React.js
+* TypeScript
+* Pinata
+* Supabase
+* Google Cloud
+* Clerk
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- GETTING STARTED -->
-## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/AndrewCheung360/DivvyAI.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin AndrewCheung360/DivvyAI
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Integrating voice control to log user progress and automatically update schedules
+- [ ] Enabling video uploads with transcript summaries relevant to each task
+- [ ] Expanding task breakdowns to include exams and projects
 
 See the [open issues](https://github.com/AndrewCheung360/DivvyAI/issues) for a full list of proposed features (and known issues).
 
@@ -206,7 +168,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+* Andrew Cheung - andrewcheung360@gmail.com
+* Jason Mun - jason.mun484@gmail.com
+* James Tu - jamestucontact@gmail.com
+* Vicky Wang - vw92@cornell.edu
 
 Project Link: [https://github.com/AndrewCheung360/DivvyAI](https://github.com/AndrewCheung360/DivvyAI)
 
@@ -214,14 +179,7 @@ Project Link: [https://github.com/AndrewCheung360/DivvyAI](https://github.com/An
 
 
 
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
 
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
