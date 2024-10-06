@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 
 /* Gets alls substacks with assignmentId*/
 export async function GET(request: NextRequest) {
+  console.log("hi")
   const { searchParams } = new URL(request.url);
   const assignmentId = parseInt(searchParams.get("assignment_id") as string);
   try {
