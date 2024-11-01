@@ -39,10 +39,10 @@
   <p align="center">
     DivvyAI stops last-minute assignment panic by breaking down tasks and scheduling them into free time. With AI-powered scheduling and course references, students stay on track and stress-free.
     <br />
-    <a href="https://github.com/AndrewCheung360/DivvyAI"><strong>Explore the docs »</strong></a>
+<!--     <a href="https://github.com/AndrewCheung360/DivvyAI"><strong>Explore the docs »</strong></a> -->
     <br />
     <br />
-    <a href="https://github.com/AndrewCheung360/DivvyAI">View Demo</a>
+    <a href="https://youtu.be/EUgvCDdQ_po">View Demo</a>
     ·
     <a href="https://github.com/AndrewCheung360/DivvyAI/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
